@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 function Header(props) {
   return (
     <header>
@@ -49,32 +50,54 @@ const Article = (props) => {
   );
 };
 function App() {
-  const mode = "WELCOME";
+  const [mode, setMode] = useState("WELCOME");
+  const [id, setId] = useState();
   const topics = [
     { id: 1, title: "html", body: "html is ..." },
     { id: 2, title: "css", body: "css is ..." },
     { id: 3, title: "javascript", body: "js is ..." },
   ];
+  let content = null;
   if (mode === "WELCOME") {
-    let content = null;
+    content = <Article title="Welcome" body="Hello, WEB" />;
   } else if (mode === "READ") {
+    let title,
+      body = null;
+
+    topics.map((e) => {
+      if (e.id === parseInt(id)) {
+        title = e.title;
+        body = e.body;
+      }
+    });
+
+    content = <Article title={title} body={body} />;
   }
   return (
     <div>
       <Header
-        title="REACT"
+        title="WEB"
         onChangeMode={() => {
-          alert("HEADER");
+          setMode("WELCOME");
         }}
       />
       <Nav
         topics={topics}
-        onChangeMode={(id) => {
-          alert(id);
+        onChangeMode={(_id) => {
+          setMode("READ");
+          setId(_id);
         }}
       />
-      <Article title="Welcome" body="Hello, WEB" />
-      <Article title="HI" body="Hello, WEB" />
+
+      {content}
+      <a
+        href="/create"
+        onClick={(event) => {
+          event.preventDefault();
+        }}
+      >
+        Create
+      </a>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 function Header(props) {
   return (
     <header>
@@ -144,7 +145,8 @@ function App() {
     contextControl = (
       <>
         <li>
-          <a
+          <Button
+            variant="contained"
             href={"/update/" + id}
             onClick={(event) => {
               event.preventDefault();
@@ -152,12 +154,11 @@ function App() {
             }}
           >
             Update
-          </a>
+          </Button>
         </li>
         <li>
-          <input
-            type="button"
-            value="Delete"
+          <Button
+            variant="contained"
             onClick={() => {
               const newTopics = [];
               topics.map((e) => {
@@ -168,7 +169,9 @@ function App() {
               setTopics(newTopics);
               setMode("WELCOME");
             }}
-          />
+          >
+            Delete
+          </Button>
         </li>
       </>
     );
@@ -233,15 +236,14 @@ function App() {
       {content}
       <ul>
         <li>
-          <a
-            href="/create"
-            onClick={(event) => {
-              event.preventDefault();
+          <Button
+            variant="contained"
+            onClick={() => {
               setMode("CREATE");
             }}
           >
-            Create
-          </a>
+            CREATE
+          </Button>
         </li>
         {contextControl}
       </ul>

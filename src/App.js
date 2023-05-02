@@ -1,6 +1,9 @@
 import "./App.css";
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+
 function Header(props) {
   return (
     <header>
@@ -37,14 +40,14 @@ const Nav = (props) => {
     );
   });
   return (
-    <nav>
+    <nav style={{ border: "1px solid gray" }}>
       <ol>{lis}</ol>
     </nav>
   );
 };
 const Article = (props) => {
   return (
-    <article>
+    <article style={{ border: "1px solid gray" }}>
       <h2>{props.title}</h2>
       {props.body}
     </article>
@@ -129,7 +132,12 @@ function App() {
   let content = null;
   let contextControl = null;
   if (mode === "WELCOME") {
-    content = <Article title="Welcome" body="Hello, WEB" />;
+    content = (
+      <Article
+        title="Welcome"
+        body="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+      />
+    );
   } else if (mode === "READ") {
     let title,
       body = null;
@@ -218,22 +226,27 @@ function App() {
     );
   }
   return (
-    <div>
+    <Container fixed>
       <Header
         title="WEB"
         onChangeMode={() => {
           setMode("WELCOME");
         }}
       />
-      <Nav
-        topics={topics}
-        onChangeMode={(_id) => {
-          setMode("READ");
-          setId(_id);
-        }}
-      />
-
-      {content}
+      <Grid container>
+        <Grid item xs="4">
+          <Nav
+            topics={topics}
+            onChangeMode={(_id) => {
+              setMode("READ");
+              setId(_id);
+            }}
+          />
+        </Grid>
+        <Grid item xs="8">
+          {content}
+        </Grid>
+      </Grid>
       <ul>
         <li>
           <Button
@@ -247,7 +260,7 @@ function App() {
         </li>
         {contextControl}
       </ul>
-    </div>
+    </Container>
   );
 }
 
